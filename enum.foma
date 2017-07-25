@@ -1,0 +1,394 @@
+# (c) 2017 Anssi Yli-Jyrä
+# experiments related to Yli-Jyrä & Gómez-Rodriguez (2017)
+#
+# Please cite this software as follows:
+#
+#   Anssi Yli-Jyrä and Carlos Gómez-Rodriguez
+#   Axiomatization of Families of Noncrossing Graph in Dependency Parsing
+#   Accepted to ACL 2017, Vancouver.
+#   
+# subfiles:
+#    enum-total.foma
+#    enum-examples.foma
+
+set print-space ON
+
+#########################
+# COMMON HELPER FUNCTIONS
+#########################
+# This function extracts the alphabet of the language:
+def Alpha(X)  [ X .o. ?:0* ? ?:0* ].2;
+# This function extracts the bigrams of the language:
+def Bigrams(X)  [ X .o. ?:0* ? ? ?:0* ].2;
+# This function constructs the local language from bigrams
+def LocalLanguage(Bigrams) "$" \"$"* "$" - ?* [ ? ? - Bigrams ] ?* ;
+# This function removes the string boundaries ($) 
+def RemoveBoundaries(L)    [ L .o. "$":0 \"$"* "$":0 ].2;
+
+###################################
+# THE REGULAR COMPONENT IN FIGUR  3
+###################################
+# We defined the local language Reg first by thinking through
+# plausible examples and then extracting a local language from it:
+def Examples Bigrams(                                                                    "$" "$" | 
+              "$"            "{" "}"               "{" "}"                                   "$" |
+              "$"       "['" "{" "}" "]'" "[" "['" "{" "}" "]'" "[" "{" "}" "]" "]"          "$" |
+              "$"       "['" "{" "}" "]'" "["      "{" "}" "]"  "[" "{" "}" "]"      "{" "}" "$" |
+	      "$"  "['" "['" "{" "}" "]'"          "{" "}" "["      "{" "}" "]" "]'"         "$" ) |
+	      "['" "$" |    # this is not intuitive: we let the strings end prematurely
+              "["  "$" ;    # this is not intuitive: we let the strings end prematurely
+# The second method is to build the local language directly:
+def Design  [ "{"  "}"  |                                                 # state 1
+	      "$"  "['" | "['" "['" | "[" "['" | "$" "$" |                # state 0
+              "$"  "{"  | "['" "{"  | "[" "{"  | "[" "$"   | "['" "$" |   # state 0
+	      "}"  "{"  | "}"  "["  | "}"  "$" |  "}"  "]" | "}" "]'" |   # state 2
+	      "]"  "{"  | "]"  "["  | "]"  "$" |  "]"  "]" | "]" "]'" |   # state 2
+              "]'" "{"  | "]'" "["  | "]'" "$" ];                         # state 3	      
+def Reg RemoveBoundaries(LocalLanguage(Design));
+
+#############
+# CHAIN MODEL
+#############
+
+# First we describe chain model (Figure 4).
+# Since this is a local language/automaton, we describe the automaton
+# by using equivalence classes of symbols and listing the pairs of
+# adjacent symbols.
+#
+# Later, we extract only the transition between two kinds of brackets
+# and combine this with the information on the inverse homomorphic
+# image of Reg (Figure 3).
+#
+# Note: the following has evolved organically and may contain redundant parts.
+
+# Equivalence classes, or just classes:
+
+# a primarily bidirectional forward chain:
+def A      [ "[A"  "]A"  | "/A"  ">A"   | "<A"  "\\A"  ];
+def AA     [               "/0"  ">0"                  ];
+def a      [ "[a"  "]a"  | "<a"  "\\a"  | "/a"  ">a"   ];
+def aa     [               "<0"  "\\0"                 ];
+# a primarily foward chain:
+def C      [ "[C"  "]C"  | "/C"  ">C"   | "<C"  "\\C"  ];
+def CC     [               "<1"  "\\1"                 ];
+def c      [ "[c"  "]c"  | "<c"  "\\c"  | "/c"  ">c"   ];
+def cc     [               "/1"  ">1"                  ];
+# a primarily forward 2-turn chain
+def E      [ "[E"  "]E"  | "/E"  ">E"   | "<E"   "\\E" ];
+def EE     [               "/2"  ">2"                  ];
+def e      [ "[e"  "]e"  | "<e"   "\\e" | "/e"  ">e"   ];
+def ee     [               "<2"  "\\2"                 ];
+# a forward chain
+def F      [               "/F"  ">F"                  ];
+def FF     [               "/F'" ">F'"                 ];
+def f      [               "<f"  "\\f"                 ];
+def ff     [               "<f'" "\\f'"                ];
+# a primarily forward chain:
+# P indicates a non-inverted that does not cover a 2-turn chain
+def P      [               "/P"  ">P"                  ];
+def Q      [ "[Q"  "]Q"  | "/Q"  ">Q"   | "<Q"  "\\Q"  |  "/P"  ">P" ];
+def QQ     [ "[Q"  "]Q"  | "/Q"  ">Q"   | "<Q"  "\\Q"  ];
+def p      [               "<p"  "\\p"                 ];
+def q      [ "[q"  "]q"  | "/q"  ">q"   | "<q"  "\\q"  |  "<p" "\\p" ];
+def qq     [ "[q"  "]q"  | "/q"  ">q"   | "<q"  "\\q"  ];
+# forward edges that cover a 2-turn chain
+def V      [               "/V"  ">V"                  ];
+def VV     [               "/V'" ">V'"                 ];
+def v      [               "<v"  "\\v"                 ];
+def vv     [               "<v'" "\\v'"                ];
+# a 3-turn chain:
+def ZZ     [               "<3"  "\\3"                 ];
+def zz     [               "/3"  ">3"                  ];
+def Z      [ "[Z"  "]Z"  | "/Z"  ">Z"   | "<Z"  "\\Z"  ];
+# a bidirectional chain:
+def II     [ "[I'" "]I'" | "/I'" ">I'"  | "<I'" "\\I'" ];
+def I      [ "[I"  "]I"  | "/I"  ">I"   | "<I"  "\\I"  ];
+# a loose chain:
+def X      [ "[."  "]."  | "/."  ">."   | "<."  "\\."  ];
+def XX     [ "[."  "]."  | "/."  ">."   | "<."  "\\."  ];
+
+# the adjacent symbols:
+
+def TRANS  "$" [FF|ff|VV|vv|II|XX] |
+	   [I|II]      [ I | AA | aa | v | V ] |	   
+	   [A|AA]      [ A | CC          ] | 
+	   [a|aa]      [ a | cc          ] | 
+	   [F|FF]      [ F | CC | V | QQ ] | 
+	   [f|ff]      [ f | cc | v | qq ] | 
+	   [q|qq|v|vv] [ q | cc | v      ] | 
+	   [Q|QQ|V|VV] [ Q | CC | V      ] | 
+	   [C|CC]      [ C | EE          ] |
+	   [c|cc]      [ c | ee          ] |
+	   [E|EE]      [ E | ZZ          ] |
+	   [e|ee]      [ e | zz          ] |
+           [Z|ZZ|zz]   Z  |
+	   [X|XX]      XX ;
+
+###############
+# DYCK LANGUAGE
+###############
+# This extracts matching brackets from the chain model
+def TRANSBrackets   [ TRANS
+                      .o. "$":0 ? ? | ? ? ?:0 ?:0 | ?:0 ?:0 ? ?
+		    ].2;                                      
+# The matching brackets give rise to a Dyck language D_{23}.
+# Its stepwise, reflexive derivation relation is expressed as an FST:
+def Pairs  [ "{" "}" | TRANSBrackets ] | 0;
+def T55    [ ? | [ Pairs .x. 0]]*;
+
+# This extracts neighbouring brackets:
+def TRANSNeighbors  [ TRANS
+                      .o. ? [ ? <> ?:0 ] | [ ? <> ?:0 ] [ ? <> ?:0 ] 
+                    ].2;
+
+########################
+# SIGMA AND ITS SEGMENTS
+########################
+# Construct the latent symbolsets
+def L    [ TRANSBrackets .o. ? ?:0 ].2 ;                # Opening edge brackets
+def R    [ TRANSBrackets .o. ?:0 ? ].2 ;                # Closing edge brackets
+
+def L2X  "<0"| "<1" | "<2"| "<3"| "<A"| "<C"| "<E"| "<f" | "<f'"| "<I"| "<p"| "<Q"|
+         "<v"| "<v'"| "<p"| "<Z"| "<a"| "<c"| "<e"| "<I'"| "<q" | "<.";
+def R2X "\\0"|"\\1" |"\\2"|"\\3"|"\\A"|"\\C"|"\\E"|"\\f" |"\\f'"|"\\I"|"\\p"|"\\Q"|
+        "\\v"|"\\v'"|"\\p"|"\\Z"|"\\a"|"\\c"|"\\e"|"\\I'"|"\\q" | "\\.";
+def L1X  "/0"|  "/1"| "/2"| "/3"| "/A"| "/C"| "/E"| "/F" | "/F'"| "/I"| "/P"| "/Q"|
+         "/V"| "/V'"| "/P"| "/Z"| "/a"| "/c"| "/e"| "/I'"| "/q" | "/.";
+def R1X  ">0"|  ">1"| ">2"| ">3"| ">A"| ">C"| ">E"| ">F" | ">F'"| ">I"| ">P"| ">Q"|
+         ">V"| ">V'"| ">P"| ">Z"| ">a"| ">c"| ">e"| ">I'"| ">q" | ">.";
+def L3X                           "[A"| "[C"| "[E"| "[I" |                    "[Q"|
+                            "[Z"| "[a"| "[c"| "[e"| "[I'"| "[q" | "[.";
+def R3X                           "]A"| "]C"| "]E"| "]I" |                    "]Q"|
+                            "]Z"| "]a"| "]c"| "]e"| "]I'"| "]q" | "].";
+
+# The left and right brackets of initial edge in nonloose chains:
+def R0     [ "]I'" | ">F'" | "\\f'" | "\\I'" | ">I'" | ">V'" | "\\v'" ];
+def L0     [ "[I'" | "/F'" | "<f'"  | "<I'"  | "/I'" | "/V'" | "<v'"  ];
+def R9     [ "]." | ">." | "\\." ];
+def L9     [ "[." | "/." | "<."  ];
+def NonL9  L - L9;
+
+# There are in total  108 edge brackets:
+def sigma [ L1X | R1X | L2X | R2X | L3X | R3X ] | "{" | "}";
+def SIGMA L | R  | "{" | "}" ;
+
+####################
+# THE INPUT SENTENCE
+####################
+# The input sentences that have all possible brackets
+def WB   "{" "}";
+def W    \[ "{" | "}" ]*;
+def GA   W WB W WB W WB W WB W WB W WB W WB W WB W WB W ;
+def G9   W WB W WB W WB W WB W WB W WB W WB W WB W ;
+def G8   W WB W WB W WB W WB W WB W WB W WB W ;
+def G7   W WB W WB W WB W WB W WB W WB W ;
+def G6   W WB W WB W WB W WB W WB W ;
+def G5   W WB W WB W WB W WB W ;
+def G4   W WB W WB W WB W ;
+def G3   W WB W WB W ;
+def G2   W WB W ;
+def G1   W ;
+def G0   0;
+
+##########################################################
+# RELATING SIGMA [[']]'{}$ TO THE EXTENDED SET OF BRACKETS
+##########################################################
+# Expand the alphabet in Reg to the alphabet in Reg_latent:
+def ExpandSigma(X)  [ X .o. [ "['":L0    | "]'":R0    | "{" | 
+                              "[":[L-L0] | "]":[R-R0] | "}" | "$" ]* ].2;
+
+##############################################################
+# The subsets of the alphabet defined in the end of section 5:
+##############################################################
+
+def Lslash     L3X   | L1X;   # / [ -brackets
+def Rgt        R3X   | R1X;   # ] > -brackets
+def Llt        L3X   | L2X;   # [ < -brackets
+def Rbslash    R3X   | R2X;   # ] \\-brackets
+def B          "{"   | "}";
+def Rsigma     R ;
+def Rloose     ">." | "]." | "\\." | "}";
+def Rnonloose  R - Rloose;
+
+# R reaching F, Q, I, A 
+def Rright     [[F|FF|QQ|Q|P|II|I|AA|A|VV|V] .o. ?:0 ?].2;
+def Rleft      [[f|ff|qq|q|p|II|I|aa|a|vv|v] .o. ?:0 ?].2;
+
+def Right2     [[P|EE|E] .o. ?:0 ?].2;
+def Left2      [[p|ee|e] .o. ?:0 ?].2;
+def In         R1X | L2X | L3X | R3X ;
+def NonB       R   | L ;
+
+# Non-' right edges reaching I, Q, q, A, a, C, c
+def Rvergent   [[I|QQ|Q|qq|q|P|p|VV|V|vv|v|AA|A|aa|a|CC|C|cc|c] .o. ?:0 ?].2;
+def Or         R1X | L2X | L1X | R2X ;   # brackets of oriented edges
+def Inv        L3X   | R3X ;             # brackets of inverted edges
+
+def LB         "$" | "{";
+def RB         "$" | "}";
+
+# Closing brackets for left and right monotonic chains and vergent chains
+
+def Inverted    ">I'"  | ">I"  | ">Q"  | ">q" |"\\A" | ">C"  |"\\E" |
+                "\\I'" |"\\I"  |"\\Q"  |"\\q" | ">a" | "\\c" | ">e" ;
+def NonInverted ">F'"  | ">F"  | ">0"  | ">P" |"\\1" | ">2"  |"\\3" | ">V'" |  ">V" | ">P"  |
+                "\\f'" |"\\f"  |"\\0"  |"\\p" | ">1" | "\\2" | ">3" |"\\v'" | "\\v" | "\\p" ;
+def Almost      ">V'"  | ">V"  |"\\v'" |"\\v" ;
+def NotAlmost   ">F'"  | "\\f'"| ">F"  |"\\f" | ">Q" | ">P"  |"\\p" |"\\q" | ">0" | "\\0";
+
+########################
+# CONSTRAINTS IN TABLE 1
+########################
+
+def ACYCU      ?* - ?* Rnonloose Rsigma ?* ;
+def CONNW      ?* - ?* Rloose (B ?*) - ("{" ?* | ?* "}" ) ;
+def ACYCD      ?* - ?* [ Rright Rbslash | Rleft Rgt | Inv ] ?* ;
+def UNAMB      ?* - ?* [ Rright Rgt 
+                       | Rleft  Rbslash 
+                       | Rvergent R 
+                       | Right2 Rbslash
+                       | Left2  Rgt
+                    ] ?*;
+def PROJW      ?* - ?* [ Lslash Llt | Rgt Rbslash ] ?* ;
+def INV        ?* - ?* [ Or ] ?* ;
+def ORIEN      ?* - ?* [ Inv ] ?* ;
+def OUT        ?* - ?* [ In NonB* In ] ?* ;
+
+def LooseChainConstraint  ?* - ?* [ [    "}" | R9 ] [ L - L9 | "}" ] | 
+    			            [? - "}" - R9 ] [ L9           ] ] ?*;
+def CycleEdges  ?*          
+             -  [ ?* Rright          [ Rbslash & NonInverted ] ?* ] 
+             -  [ ?* Rleft           [ Rgt     & NonInverted ] ?* ] 
+             -  [ [ ?* - ?* Rright ] [ Rbslash &    Inverted ] ?* ] 
+             -  [ [ ?* - ?* Rleft  ] [ Rgt     &    Inverted ] ?* ] ;
+def TwoTurnEdges ?*
+             -  [ ?* Left2           [ Rbslash &   NotAlmost ] ?* ]
+             -  [ ?* Right2          [ Rgt     &   NotAlmost ] ?* ]
+             -  [ [ ?* - ?* Left2  ] [ Rbslash &      Almost ] ?* ]
+             -  [ [ ?* - ?* Right2 ] [ Rgt     &      Almost ] ?* ] ;
+
+def RegBigrams  ExpandSigma(Design);
+def RegLat   RemoveBoundaries(LocalLanguage( [ TRANSNeighbors & R L & RegBigrams ] | [ RegBigrams - R L ]))  
+             & CycleEdges & TwoTurnEdges & LooseChainConstraint ;
+
+################
+# VISUALIZATIONS
+################
+regex Reg;  
+#view                                         # Uncomment to see the Reg in Figure 3
+regex S "->" [ Pairs .o. (? 0:S ? 0:S) ].2;  
+#print words                                  # Uncomment to see the Dyck grammar
+regex RemoveBoundaries(LocalLanguage( TRANSNeighbors | ? "$"));
+#view                                         # Uncomment to see (almost) Figure 4 
+# It is almost:  it does not even accept the string  /F' >F' because it does not read 
+# pairs of brackets but individual bracket symbols, changing states after the first.
+
+#############
+# UNIT TESTS:
+#############
+echo 
+echo ************* UNIT TESTS FOR REG **************
+# There should not be any difference between Design and Examples
+regex [ Design - Examples ] | [ Examples - Design ];
+print words
+echo Reg derived from one of these has 4 states:
+regex Reg;
+echo
+echo ************* UNIT TESTS FOR FIGURE 4 **************
+echo TransBracket has 56 states, 108 arcs, 54 paths.
+regex TRANSBrackets;
+echo Pairs have 55 pairs of brackets + 1 empty string = 56 paths
+regex Pairs;
+echo sigma has 110 symbols
+regex sigma;
+echo TEST 1: sigma and SIGMA must coincide: 0 states and 0 transitions:
+regex     [ SIGMA - sigma ] | [ sigma - SIGMA ];
+echo
+echo ************* TEST BIGRAM COVERAGE ***************
+def XTEST  WB  |
+   "/V'" "/F'" "{" "}" ">F'" "<1" "{" "}" "\\1" "/2" "{" "}" ">2" "<E" "/F'" "{" "}" ">F'" "/F" "{" "}" ">F" "\\E" ">V'" |
+   "/F'" "/F'" "<f'" "{" "}" "\\f'" "/1" "{" "}" ">1" "<2" "{" "}" "\\2" ">F'" "{" "}" ">F'" |
+   "/F'" "{" "}" "/." "/F'" "{" "}" ">F'" "/F" "{" "}" ">F" ">." "{" "}" ">F'" |
+   "<I'" "/V'" "/F'" "{" "}" ">F'" "<1" "{" "}" "\\1" "/2" "{" "}" ">2" ">V'" "/P" "{" "}" ">P" "\\I'" |
+   "[I'" WB "]I'" |
+   "/F'" WB ">F'" "<1" WB "\\1" |
+   "{" "}" "{" "}" "/." "{" "}" ">." |
+   "[I'" "{" "}" "]I'" "/0" "{" "}" ">0" "/A" "<f'" "{" "}" "\\f'" "<f" "{" "}" "\\f" ">A" |
+   "<f'" "/F'" "{" "}" ">F'" "<1" "{" "}" "\\1" "<C" "/F'" "{" "}" ">F'" "/F" "{" "}" ">F" "\\C" "\\f'" |
+   "[I'" "<f'" "{" "}" "\\f'" "/1" "{" "}" ">1" "/c" "<f'" "{" "}" "\\f'" "<f" "{" "}" "\\f" ">c" "]I'" |
+   "[I'" "/F'" "{" "}" ">F'" "<1" "{" "}" "\\1" "/C" "[I'" "{" "}" "]I'" "<0" "{" "}" "\\0" ">C" "]I'" |
+   "{" "}" "/." "{" "}" ">." "<." "{" "}" "\\." ;
+regex Bigrams(XTEST) - Bigrams(RegLat) ;
+echo the following should be empty list of bigrams:
+echo **********************************
+print words
+echo **********************************
+echo
+echo ***************** UNAMBIGUITY **************
+def ALL0    [ G4 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0 ].1;
+def Map     [ "[":L3X    | "<":L2X    | "/":L1X    | "{"   | 
+              "]":R3X    | "\\":R2X   | ">":R1X    | "}"   |  \SIGMA  ]*;
+def Amb(X)  [ X .o. Map.i .o. Map .o. X ] - ?*;
+regex Amb(ALL0);
+echo the following should be empty
+echo **********************************
+print words
+echo **********************************
+echo
+echo **************** EXAMPLE GRAPHS IN EACH FAMILY ****************
+def ALL0 [ G4 .o. RegLat & CONNW .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0 ].1;
+source enum-examples.foma
+echo **********************************
+print lower-words 999999999
+echo **********************************
+echo
+echo ******************* ENUMERATION OF GRAPHS *********************
+# for G5 we need 5 x T55
+def ALL0 [ G5 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0 ].1;
+def Ext(X)  [ Map .o. X ].1;
+regex RemoveBoundaries(Ext( ALL0 ));
+echo **********************************
+print lower-words 20
+echo **********************************
+echo
+echo ******************* ENUMERATION OF A FAMILY *********************
+# This computes the count of 3-node w.p. out digraphs:
+def ALL0      [G3 .o. RegLat .o. OUT & PROJW ];
+def ALL1      [ ALL0  .o. T55 ];
+def ALL2      [ ALL1  .o. T55 ];
+def ALL3      [ ALL2  .o. T55 .o. 0 ];
+echo
+echo ******************* COUNTS TO THE ONTOLOGY **********************
+# This was used to build the counts in the ontology lattice
+# usage:  foma -f enum.foma | egrep 'TAXO' | uniq -c
+#
+def ALL0      [G3 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0].1;
+source enum-taxo.foma
+echo
+echo ******************* ENUMERATION OF CLASSIFICATIONS *********************
+# this prints one line per a graph in different sizes and classes
+# usage:  foma -f enum.foma | egrep 'FAM' | sort | uniq -c
+#
+def ALL0      [G1 .o. RegLat .o. T55 .o. 0].1;
+def NODES " 1";
+source enum-total.foma
+def ALL0      [G2 .o. RegLat .o. T55 .o. T55 .o. 0].1;
+def NODES " 2";
+source enum-total.foma
+def ALL0      [G3 .o. RegLat .o. T55 .o. T55 .o. T55 .o. 0].1;
+def NODES " 3";
+#source enum-total.foma
+#def ALL0      [G4 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. 0].1;
+#def NODES " 4";
+#source enum-total.foma
+#def ALL0      [G5 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0].1;
+#def NODES " 5";
+#source enum-total.foma
+#def ALL0      [G6 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0].1;
+#def NODES " 6";
+#source enum-total.foma
+#def ALL0      [G7 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0].1;
+#def NODES " 7";
+#source enum-total.foma
+#def ALL0      [G8 .o. RegLat .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. T55 .o. 0].1;
+#def NODES " 8";

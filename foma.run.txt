@@ -1,0 +1,391 @@
+variable print-space = ON
+defined Alpha(@1)
+defined Bigrams(@1)
+defined LocalLanguage(@1)
+defined RemoveBoundaries(@1)
+defined Examples: 778 bytes. 6 states, 19 arcs, 23 paths.
+defined Design: 691 bytes. 6 states, 19 arcs, 23 paths.
+defined Reg: 559 bytes. 4 states, 9 arcs, Cyclic.
+defined A: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined AA: 289 bytes. 3 states, 2 arcs, 1 path.
+defined a: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined aa: 290 bytes. 3 states, 2 arcs, 1 path.
+defined C: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined CC: 290 bytes. 3 states, 2 arcs, 1 path.
+defined c: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined cc: 289 bytes. 3 states, 2 arcs, 1 path.
+defined E: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined EE: 289 bytes. 3 states, 2 arcs, 1 path.
+defined e: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined ee: 290 bytes. 3 states, 2 arcs, 1 path.
+defined F: 289 bytes. 3 states, 2 arcs, 1 path.
+defined FF: 291 bytes. 3 states, 2 arcs, 1 path.
+defined f: 290 bytes. 3 states, 2 arcs, 1 path.
+defined ff: 292 bytes. 3 states, 2 arcs, 1 path.
+defined P: 289 bytes. 3 states, 2 arcs, 1 path.
+defined Q: 548 bytes. 6 states, 8 arcs, 4 paths.
+defined QQ: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined p: 290 bytes. 3 states, 2 arcs, 1 path.
+defined q: 549 bytes. 6 states, 8 arcs, 4 paths.
+defined qq: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined V: 289 bytes. 3 states, 2 arcs, 1 path.
+defined VV: 291 bytes. 3 states, 2 arcs, 1 path.
+defined v: 290 bytes. 3 states, 2 arcs, 1 path.
+defined vv: 292 bytes. 3 states, 2 arcs, 1 path.
+defined ZZ: 290 bytes. 3 states, 2 arcs, 1 path.
+defined zz: 289 bytes. 3 states, 2 arcs, 1 path.
+defined Z: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined II: 468 bytes. 5 states, 6 arcs, 3 paths.
+defined I: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined X: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined XX: 462 bytes. 5 states, 6 arcs, 3 paths.
+defined TRANS: 6.8 kB. 124 states, 234 arcs, 268 paths.
+defined TRANSBrackets: 4.9 kB. 56 states, 108 arcs, 54 paths.
+defined Pairs: 5.0 kB. 57 states, 110 arcs, 56 paths.
+defined T55: 6.7 kB. 56 states, 222 arcs, Cyclic.
+defined TRANSNeighbors: 7.1 kB. 16 states, 251 arcs, 1052 paths.
+defined L: 4.0 kB. 2 states, 54 arcs, 54 paths.
+defined R: 4.0 kB. 2 states, 54 arcs, 54 paths.
+defined L2X: 1.1 kB. 2 states, 21 arcs, 21 paths.
+defined R2X: 1.1 kB. 2 states, 21 arcs, 21 paths.
+defined L1X: 1.1 kB. 2 states, 21 arcs, 21 paths.
+defined R1X: 1.1 kB. 2 states, 21 arcs, 21 paths.
+defined L3X: 720 bytes. 2 states, 12 arcs, 12 paths.
+defined R3X: 720 bytes. 2 states, 12 arcs, 12 paths.
+defined R0: 514 bytes. 2 states, 7 arcs, 7 paths.
+defined L0: 511 bytes. 2 states, 7 arcs, 7 paths.
+defined R9: 333 bytes. 2 states, 3 arcs, 3 paths.
+defined L9: 332 bytes. 2 states, 3 arcs, 3 paths.
+defined NonL9: 4.0 kB. 2 states, 51 arcs, 51 paths.
+defined sigma: 4.8 kB. 2 states, 110 arcs, 110 paths.
+defined SIGMA: 5.0 kB. 2 states, 110 arcs, 110 paths.
+defined WB: 287 bytes. 3 states, 2 arcs, 1 path.
+defined W: 299 bytes. 1 state, 1 arc, Cyclic.
+defined GA: 731 bytes. 19 states, 28 arcs, Cyclic.
+defined G9: 683 bytes. 17 states, 25 arcs, Cyclic.
+defined G8: 635 bytes. 15 states, 22 arcs, Cyclic.
+defined G7: 587 bytes. 13 states, 19 arcs, Cyclic.
+defined G6: 539 bytes. 11 states, 16 arcs, Cyclic.
+defined G5: 491 bytes. 9 states, 13 arcs, Cyclic.
+defined G4: 443 bytes. 7 states, 10 arcs, Cyclic.
+defined G3: 395 bytes. 5 states, 7 arcs, Cyclic.
+defined G2: 347 bytes. 3 states, 4 arcs, Cyclic.
+defined G1: 299 bytes. 1 state, 1 arc, Cyclic.
+defined G0: 160 bytes. 1 state, 0 arcs, 1 path.
+defined ExpandSigma(@1)
+defined Lslash: 1.6 kB. 2 states, 33 arcs, 33 paths.
+defined Rgt: 1.6 kB. 2 states, 33 arcs, 33 paths.
+defined Llt: 1.6 kB. 2 states, 33 arcs, 33 paths.
+defined Rbslash: 1.6 kB. 2 states, 33 arcs, 33 paths.
+defined B: 287 bytes. 2 states, 2 arcs, 2 paths.
+defined Rsigma: 4.0 kB. 2 states, 54 arcs, 54 paths.
+defined Rloose: 375 bytes. 2 states, 4 arcs, 4 paths.
+defined Rnonloose: 4.0 kB. 2 states, 51 arcs, 51 paths.
+defined Rright: 1.5 kB. 2 states, 18 arcs, 18 paths.
+defined Rleft: 1.5 kB. 2 states, 18 arcs, 18 paths.
+defined Right2: 641 bytes. 2 states, 5 arcs, 5 paths.
+defined Left2: 643 bytes. 2 states, 5 arcs, 5 paths.
+defined In: 3.0 kB. 2 states, 66 arcs, 66 paths.
+defined NonB: 4.9 kB. 2 states, 108 arcs, 108 paths.
+defined Rvergent: 2.4 kB. 2 states, 31 arcs, 31 paths.
+defined Or: 3.8 kB. 2 states, 84 arcs, 84 paths.
+defined Inv: 1.2 kB. 2 states, 24 arcs, 24 paths.
+defined LB: 287 bytes. 2 states, 2 arcs, 2 paths.
+defined RB: 287 bytes. 2 states, 2 arcs, 2 paths.
+defined Inverted: 814 bytes. 2 states, 14 arcs, 14 paths.
+defined NonInverted: 990 bytes. 2 states, 18 arcs, 18 paths.
+defined Almost: 379 bytes. 2 states, 4 arcs, 4 paths.
+defined NotAlmost: 640 bytes. 2 states, 10 arcs, 10 paths.
+defined ACYCU: 5.8 kB. 2 states, 168 arcs, Cyclic.
+defined CONNW: 605 bytes. 3 states, 15 arcs, Cyclic.
+defined ACYCD: 5.5 kB. 4 states, 184 arcs, Cyclic.
+defined UNAMB: 8.2 kB. 4 states, 320 arcs, Cyclic.
+defined PROJW: 7.2 kB. 3 states, 261 arcs, Cyclic.
+defined INV: 2.5 kB. 1 state, 1 arc, Cyclic.
+defined ORIEN: 897 bytes. 1 state, 1 arc, Cyclic.
+defined OUT: 5.6 kB. 2 states, 154 arcs, Cyclic.
+defined LooseChainConstraint: 7.5 kB. 3 states, 278 arcs, Cyclic.
+defined CycleEdges: 6.8 kB. 4 states, 276 arcs, Cyclic.
+defined TwoTurnEdges: 4.7 kB. 3 states, 177 arcs, Cyclic.
+defined RegBigrams: 7.6 kB. 6 states, 273 arcs, 5783 paths.
+defined RegLat: 13.7 kB. 22 states, 665 arcs, Cyclic.
+559 bytes. 4 states, 9 arcs, Cyclic.
+5.9 kB. 115 states, 168 arcs, 56 paths.
+5.4 kB. 14 states, 142 arcs, Cyclic.
+echo ************* UNIT TESTS FOR REG **************
+160 bytes. 1 state, 0 arcs, 0 paths.
+Reg derived from one of these has 4 states:
+559 bytes. 4 states, 9 arcs, Cyclic.
+
+************* UNIT TESTS FOR FIGURE 4 **************
+TransBracket has 56 states, 108 arcs, 54 paths.
+4.9 kB. 56 states, 108 arcs, 54 paths.
+Pairs have 55 pairs of brackets + 1 empty string = 56 paths
+5.0 kB. 57 states, 110 arcs, 56 paths.
+sigma has 110 symbols
+4.8 kB. 2 states, 110 arcs, 110 paths.
+TEST 1: sigma and SIGMA must coincide: 0 states and 0 transitions:
+160 bytes. 1 state, 0 arcs, 0 paths.
+
+************* TEST BIGRAM COVERAGE ***************
+defined XTEST: 4.0 kB. 161 states, 170 arcs, 13 paths.
+160 bytes. 1 state, 0 arcs, 0 paths.
+the following should be empty list of bigrams:
+**********************************
+**********************************
+
+***************** UNAMBIGUITY **************
+defined ALL0: 83.8 kB. 3938 states, 5149 arcs, 1792 paths.
+defined Map: 5.2 kB. 1 state, 118 arcs, Cyclic.
+defined Amb(@1)
+160 bytes. 1 state, 0 arcs, 0 paths.
+the following should be empty
+**********************************
+**********************************
+
+**************** EXAMPLE GRAPHS IN EACH FAMILY ****************
+redefined ALL0: 79.1 kB. 3771 states, 4851 arcs, 1539 paths.
+Opening file 'enum-examples.foma'.
+defined apply(@4)
+defined ALL1: 88.5 kB. 4292 states, 5444 arcs, 1539 paths.
+defined ALL2: 93.5 kB. 4566 states, 5762 arcs, 1539 paths.
+defined ALL3: 97.1 kB. 4765 states, 5992 arcs, 1539 paths.
+defined ALL4: 99.7 kB. 4911 states, 6150 arcs, 1539 paths.
+defined ALL5: 99.7 kB. 4912 states, 6151 arcs, 1539 paths.
+defined ALL6: 103.1 kB. 5113 states, 6364 arcs, 1539 paths.
+defined ALL7: 110.0 kB. 5523 states, 6802 arcs, 1539 paths.
+defined ALL8: 111.7 kB. 5614 states, 6907 arcs, 1539 paths.
+defined CMP: 2.9 kB. 4 states, 155 arcs, Cyclic.
+defined SEL(@1)
+defined EXAMPLES: 49.0 kB. 2019 states, 2834 arcs, 1539 paths.
+8.1 kB. 197 states, 215 arcs, 20 paths.
+**********************************
+EXAMPLE INV PROJ 3.2 MIXED-TREE [ { } ] [ { } ] [ { } ] 
+EXAMPLE INV NONPROJ 3.2 MIXED-TREE [ [ [ { } ] { } ] { } ] 
+EXAMPLE INV NONPROJ 1.1 CONNW [ [ [ { } ] [ { } ] ] [ { } ] ] 
+EXAMPLE NONINV PROJ 4.0 OUT-M-TREE < / { } > { } \\ [ { } ] 
+EXAMPLE NONINV PROJ 3.2 MIXED-TREE / / { } > [ { } ] { } > 
+EXAMPLE NONINV PROJ 1.1 CONNW / / / { } > / { } > > [ { } ] > 
+EXAMPLE NONINV PROJ 6.0 OUT-TREE / / / { } > { } > { } > 
+EXAMPLE NONINV PROJ 5.1 POLYTREE / / { } > < { } \\ { } > 
+EXAMPLE NONINV PROJ 3.5 W.C.DAG / / / { } > / { } > > / { } > > 
+EXAMPLE NONINV PROJ 4.2 W.C.MULTITREE / / { } > < { } \\ / { } > > 
+EXAMPLE NONINV NONPROJ 4.0 OUT-M-TREE / / [ { } ] { } > { } > 
+EXAMPLE NONINV NONPROJ 3.2 MIXED-TREE / < [ { } ] { } \\ { } > 
+EXAMPLE NONINV NONPROJ 2.2 W.C.UNAMB / < [ { } ] { } \\ < { } \\ > 
+EXAMPLE NONINV NONPROJ 1.1 CONNW / / < { } \\ / { } > > [ { } ] > 
+EXAMPLE NONINV NONPROJ 6.0 OUT-TREE / / < { } \\ { } > { } > 
+EXAMPLE NONINV NONPROJ 5.1 POLYTREE / < < { } \\ { } \\ { } > 
+EXAMPLE NONINV NONPROJ 4.3 W.C.OUT-ORIENTED / / < { } \\ < { } \\ > { } > 
+EXAMPLE NONINV NONPROJ 3.5 W.C.DAG / / < { } \\ / { } > > / { } > > 
+EXAMPLE NONINV NONPROJ 3.3 W.C.UNAMB.OR. / < < { } \\ { } \\ < { } \\ > 
+EXAMPLE NONINV NONPROJ 2.3 W.C.OR. / / < { } \\ < { } \\ > / { } > > 
+**********************************
+
+******************* ENUMERATION OF GRAPHS *********************
+redefined ALL0: 1.4 MB. 68041 states, 89540 arcs, 62464 paths.
+defined Ext(@1)
+160 bytes. 1 state, 0 arcs, 0 paths.
+**********************************
+**********************************
+
+******************* ENUMERATION OF A FAMILY *********************
+redefined ALL0: 15.1 kB. 50 states, 751 arcs, Cyclic.
+redefined ALL1: 15.5 kB. 52 states, 778 arcs, Cyclic.
+redefined ALL2: 17.6 kB. 140 states, 916 arcs, Cyclic.
+redefined ALL3: 4.7 kB. 68 states, 87 arcs, 21 paths.
+
+******************* COUNTS TO THE ONTOLOGY **********************
+redefined ALL0: 7.8 kB. 223 states, 285 arcs, 64 paths.
+Opening file 'enum-taxo.foma'.
+redefined apply(@4)
+redefined ALL1: 8.4 kB. 258 states, 320 arcs, 64 paths.
+redefined ALL2: 8.8 kB. 282 states, 344 arcs, 64 paths.
+redefined ALL3: 9.3 kB. 310 states, 372 arcs, 64 paths.
+redefined ALL4: 9.5 kB. 315 states, 377 arcs, 64 paths.
+redefined ALL5: 9.8 kB. 333 states, 395 arcs, 64 paths.
+redefined ALL6: 10.0 kB. 345 states, 407 arcs, 64 paths.
+11.2 kB. 363 states, 425 arcs, 64 paths.
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 6.0 OUT-TREE NODES 
+TAXO 5.1 POLYTREE NODES 
+TAXO 5.1 POLYTREE NODES 
+TAXO 5.1 POLYTREE NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 5.0 OUT-FOREST NODES 
+TAXO 4.3 W.C.OUT-ORIENTED NODES 
+TAXO 4.3 W.C.OUT-ORIENTED NODES 
+TAXO 3.5 W.C.DAG NODES 
+TAXO 3.5 W.C.DAG NODES 
+TAXO 3.5 W.C.DAG NODES 
+TAXO 3.5 W.C.DAG NODES 
+TAXO 3.5 W.C.DAG NODES 
+TAXO 3.5 W.C.DAG NODES 
+TAXO 4.0 W.C.ACYCU OUT NODES 
+TAXO 4.0 W.C.ACYCU OUT NODES 
+TAXO 4.0 W.C.ACYCU OUT NODES 
+TAXO 4.0 W.C.ACYCU OUT NODES 
+TAXO 4.0 W.C.ACYCU OUT NODES 
+TAXO 4.0 W.C.ACYCU OUT NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.2 W.C.ACYCU NODES 
+TAXO 3.1 ACYCU OUT NODES 
+TAXO 3.1 ACYCU OUT NODES 
+TAXO 3.1 ACYCU OUT NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+TAXO 1.1 CONNW NODES 
+
+******************* ENUMERATION OF CLASSIFICATIONS *********************
+redefined ALL0: 3.3 kB. 1 state, 0 arcs, 1 path.
+defined NODES: 203 bytes. 2 states, 1 arc, 1 path.
+Opening file 'enum-total.foma'.
+redefined apply(@4)
+redefined ALL1: 3.4 kB. 2 states, 1 arc, 1 path.
+redefined ALL2: 3.4 kB. 3 states, 2 arcs, 1 path.
+redefined ALL3: 3.5 kB. 4 states, 3 arcs, 1 path.
+redefined ALL4: 3.5 kB. 5 states, 4 arcs, 1 path.
+redefined ALL5: 3.6 kB. 6 states, 5 arcs, 1 path.
+redefined ALL6: 3.6 kB. 7 states, 6 arcs, 1 path.
+5.1 kB. 14 states, 36 arcs, 24 paths.
+FAM OR. W.C. UNAMB OUT DAG ACYCU  1 
+FAM 6.0 OUT-TREE  1 
+FAM 5.1 POLYTREE  1 
+FAM 5.0 OUT-FOREST  1 
+FAM 4.3 W.C.OUT-ORIENTED  1 
+FAM 4.2 W.C.MULTITREE  1 
+FAM 4.1 OR.FOREST  1 
+FAM 4.0 MIXED OUT-TREE  1 
+FAM 3.5 W.C.DAG  1 
+FAM 3.4 MULTITREE  1 
+FAM 3.3 W.C.UNAMB.OR.  1 
+FAM 3.2 MIXED TREE  1 
+FAM 3.1 OUT-M-FOREST  1 
+FAM 3.0 OUT-ORIENTED  1 
+FAM 2.4 DAG  1 
+FAM 2.3 W.C.OR.  1 
+FAM 2.2 W.C.UNAMB  1 
+FAM 2.1 M-FOREST  1 
+FAM 2.0 OUT  1 
+FAM 1.3 UNAMB.OR.  1 
+FAM 1.2 ORIENTED  1 
+FAM 1.1 CONNW  1 
+FAM 1.0 UNAMB  1 
+FAM 0.0 DIGRAPH  1 
+redefined ALL0: 3.6 kB. 12 states, 14 arcs, 4 paths.
+redefined NODES: 203 bytes. 2 states, 1 arc, 1 path.
+Opening file 'enum-total.foma'.
+redefined apply(@4)
+redefined ALL1: 3.6 kB. 13 states, 15 arcs, 4 paths.
+redefined ALL2: 3.7 kB. 16 states, 18 arcs, 4 paths.
+redefined ALL3: 3.8 kB. 17 states, 19 arcs, 4 paths.
+redefined ALL4: 3.8 kB. 18 states, 20 arcs, 4 paths.
+redefined ALL5: 3.9 kB. 24 states, 26 arcs, 4 paths.
+redefined ALL6: 4.1 kB. 29 states, 31 arcs, 4 paths.
+5.7 kB. 37 states, 70 arcs, 69 paths.
+FAM OR. W.C. UNAMB OUT DAG ACYCU  2 
+FAM OR. W.C. UNAMB OUT DAG ACYCU  2 
+FAM 6.0 OUT-TREE  2 
+FAM 6.0 OUT-TREE  2 
+FAM 5.1 POLYTREE  2 
+FAM 5.1 POLYTREE  2 
+FAM 5.0 OUT-FOREST  2 
+FAM 5.0 OUT-FOREST  2 
+FAM 5.0 OUT-FOREST  2 
+FAM 4.3 W.C.OUT-ORIENTED  2 
+FAM 4.3 W.C.OUT-ORIENTED  2 
+FAM 4.2 W.C.MULTITREE  2 
+FAM 4.2 W.C.MULTITREE  2 
+FAM 4.1 OR.FOREST  2 
+FAM 4.1 OR.FOREST  2 
+FAM 4.1 OR.FOREST  2 
+FAM 4.0 MIXED OUT-TREE  2 
+FAM 4.0 MIXED OUT-TREE  2 
+FAM 3.5 W.C.DAG  2 
+FAM 3.5 W.C.DAG  2 
+FAM 3.4 MULTITREE  2 
+FAM 3.4 MULTITREE  2 
+FAM 3.4 MULTITREE  2 
+FAM 3.3 W.C.UNAMB.OR.  2 
+FAM 3.3 W.C.UNAMB.OR.  2 
+FAM 3.2 MIXED TREE  2 
+FAM 3.2 MIXED TREE  2 
+FAM 3.1 OUT-M-FOREST  2 
+FAM 3.1 OUT-M-FOREST  2 
+FAM 3.1 OUT-M-FOREST  2 
+FAM 3.0 OUT-ORIENTED  2 
+FAM 3.0 OUT-ORIENTED  2 
+FAM 3.0 OUT-ORIENTED  2 
+FAM 2.4 DAG  2 
+FAM 2.4 DAG  2 
+FAM 2.4 DAG  2 
+FAM 2.3 W.C.OR.  2 
+FAM 2.3 W.C.OR.  2 
+FAM 2.2 W.C.UNAMB  2 
+FAM 2.2 W.C.UNAMB  2 
+FAM 2.1 M-FOREST  2 
+FAM 2.1 M-FOREST  2 
+FAM 2.1 M-FOREST  2 
+FAM 2.0 OUT  2 
+FAM 2.0 OUT  2 
+FAM 2.0 OUT  2 
+FAM 1.3 UNAMB.OR.  2 
+FAM 1.3 UNAMB.OR.  2 
+FAM 1.3 UNAMB.OR.  2 
+FAM 1.2 ORIENTED  2 
+FAM 1.2 ORIENTED  2 
+FAM 1.2 ORIENTED  2 
+FAM 1.1 CONNW  2 
+FAM 1.1 CONNW  2 
+FAM 1.0 UNAMB  2 
+FAM 1.0 UNAMB  2 
+FAM 1.0 UNAMB  2 
+FAM 0.0 DIGRAPH  2 
+FAM 0.0 DIGRAPH  2 
+FAM 0.0 DIGRAPH  2 
+FAM 4.0 MIXED OUT-TREE  2 
+FAM 3.2 MIXED TREE  2 
+FAM 3.1 OUT-M-FOREST  2 
+FAM 2.2 W.C.UNAMB  2 
+FAM 2.1 M-FOREST  2 
+FAM 2.0 OUT  2 
+FAM 1.1 CONNW  2 
+FAM 1.0 UNAMB  2 
+FAM 0.0 DIGRAPH  2 
+redefined ALL0: 7.8 kB. 223 states, 285 arcs, 64 paths.
+redefined NODES: 203 bytes. 2 states, 1 arc, 1 path.

@@ -1,0 +1,41 @@
+
+# The following builds the concept lattice nodes for the 23 classes of the 5-vertice digraphs 
+
+#   foma -f enum.foma | egrep 'FAM' | sort | uniq -c
+
+def apply(X,C,P,N) P [X & C] | N [X - C];
+
+def ALL1      apply(ALL0,ACYCU,"ACYCU",1);
+def ALL2      apply(ALL1,ACYCD,"DAG",2);
+def ALL3      apply(ALL2,OUT,  "OUT",3);
+def ALL4      apply(ALL3,UNAMB,"UNAMB",4);
+def ALL5      apply(ALL4,CONNW,"W.C.",5);
+def ALL6      apply(ALL5,ORIEN,"OR.",6);
+
+regex "FAM" [ ALL6 .o.  ? ? ? ? ? ?  ?:0*  .o.
+? ? ? ? ? ?                               (->) "0.0 DIGRAPH" .o.
+? ? "UNAMB" ? ? ?                         (->) "1.0 UNAMB" .o.
+? "W.C." ? ? ? ?                          (->) "1.1 CONNW" .o.
+"OR." ? ? ? ? ?                           (->) "1.2 ORIENTED" .o.
+"OR." ? "UNAMB" ? ? ?                     (->) "1.3 UNAMB.OR." .o.
+? ? "UNAMB" "OUT" ? ?                     (->) "2.0 OUT" .o.
+? ? "UNAMB" ? ? "ACYCU"                   (->) "2.1 M-FOREST" .o.
+? "W.C." "UNAMB" ? ? ?                    (->) "2.2 W.C.UNAMB" .o.
+"OR." "W.C." ? ? ? ?                      (->) "2.3 W.C.OR." .o. 
+"OR." ? ? ? "DAG" ?                       (->) "2.4 DAG" .o.
+"OR." ? "UNAMB" "OUT" ? ?                 (->) "3.0 OUT-ORIENTED" .o.
+? ? "UNAMB" "OUT" ? "ACYCU"               (->) "3.1 OUT-M-FOREST" .o.
+? "W.C." "UNAMB" ? ? "ACYCU"              (->) "3.2 MIXED TREE" .o.
+"OR." "W.C." "UNAMB" ? ? ?                (->) "3.3 W.C.UNAMB.OR." .o.
+"OR." ? "UNAMB" ? "DAG" ?                 (->) "3.4 MULTITREE" .o.
+"OR." "W.C." ? ? "DAG" ?                  (->) "3.5 W.C.DAG" .o.          
+? "W.C." "UNAMB" "OUT" ? "ACYCU"          (->) "4.0 MIXED OUT-TREE" .o.
+"OR." ? "UNAMB" ? "DAG" "ACYCU"           (->) "4.1 OR.FOREST" .o.       
+"OR." "W.C." "UNAMB" ? "DAG" ?            (->) "4.2 W.C.MULTITREE" .o.    
+"OR." "W.C." "UNAMB" "OUT" ? ?            (->) "4.3 W.C.OUT-ORIENTED" .o.
+"OR." ? "UNAMB" "OUT" "DAG" "ACYCU"       (->) "5.0 OUT-FOREST" .o.    
+"OR." "W.C." "UNAMB" ? "DAG" "ACYCU"      (->) "5.1 POLYTREE" .o.         
+"OR." "W.C." "UNAMB" "OUT" "DAG" "ACYCU"  (->) "6.0 OUT-TREE" 
+] NODES .o.
+\[ 1 | 2 | 3 | 4 | 5 | 6 ]*;          
+print lower-words 999999999
